@@ -1,0 +1,178 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+html,
+body {
+    margin: 0;
+}
+
+#doc {
+    background-image: url('imgs/img-bg.jpg');
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    font-family: 'calibri';
+    width: 100%;
+}
+
+.conteneur {
+    height: 100% !important;
+    width: 100%;
+    background-color: rgba(1, 74, 102, 0.5);
+    padding: 0 5rem
+}
+
+form {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    margin: 0 auto;
+    background-color: white;
+    padding: 2.5rem;
+    border-radius: 1rem;
+    color: grey;
+}
+
+.cote {
+    width: 60%;
+}
+
+.group {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.cote2 {
+    width: 25%;
+    padding: 2.5rem;
+    text-align: center;
+}
+
+#avatar {
+    border-radius: 100%;
+    border: solid 2px turquoise;
+    min-height: 15rem;
+    min-width: 15rem;
+    max-height: 15rem;
+    max-width: 15rem;
+}
+
+input,
+select {
+    padding: 1rem;
+    margin: .5rem;
+    border-radius: .5rem;
+    border: solid 1px lightgrey;
+    font-size: 1rem;
+}
+
+#file {
+    width: auto;
+    background-image: none;
+    border: none;
+}
+
+label {
+    justify-self: left;
+    padding-left: 1rem;
+}
+
+.btn {
+    width: 25% !important;
+    color: white;
+    font-size: 1em;
+    font-weight: bold;
+    background-color: turquoise !important;
+    margin-left: 2.5rem;
+}
+
+header {
+    color: white;
+    background-color: rgb(184, 235, 82);
+    text-align: center;
+    letter-spacing: .25rem;
+}
+
+.questionform {
+    background-color: rgb(235, 235, 235) !important;
+    border-radius: 0;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+.questionform div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    background-color: transparent !important;
+    padding: 0 !important;
+}
+
+.questionform div input,
+.questionform div textarea,
+.questionform div select {
+    width: 80%;
+    font-weight: bold;
+}
+
+#reponse {
+    flex-flow: column;
+}
+
+#reponse div {
+    width: 100% !important;
+    justify-content: start;
+}
+
+#reponse div input {
+    width: 80%;
+}
+
+.cb {
+    width: 10rem !important;
+    padding: 10rem !important;
+}
+
+#question,
+.questions {
+    min-height: 7.5rem !important;
+    border: solid 1px lightgrey;
+}
+
+.questions {
+    background-image: linear-gradient(rgb(240, 240, 240), rgb(235, 235, 235), rgb(240, 240, 240));
+}
+
+.error {
+    padding: 1rem;
+    background-color: pink;
+    color: red;
+}
+
+section {
+    text-align: left;
+    width: 50%;
+    padding: 1rem;
+}
+
+span {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+checkbox {
+    width: 10em;
+}
+
+button {
+    padding: 1rem;
+    background-color: red;
+    color: wheat;
+    width: 10rem;
+    margin: 0 auto;
+}
