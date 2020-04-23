@@ -1,0 +1,86 @@
+{
+    "admin": {
+        "pnom": [
+            "Omar",
+            "Aminata"
+        ],
+        "nom": [
+            "CAMARA",
+            "Ba"
+        ],
+        "login": [
+            "coldman",
+            "gajoka"
+        ],
+        "password": [
+            "gangang",
+            "tech"
+        ],
+        "avatar": [
+            "avatar\/coldman.png",
+            "avatar\/gajoka.jpg"
+        ]
+    },
+    "joueurs": {
+        "pnom": [
+            "Aminta",
+            "Babacar",
+            "Amath",
+            "Sidy Mouhamed",
+            "Djiby",
+            "Assane",
+            "Sam",
+            "Cheikh"
+        ],
+        "nom": [
+            "DIOP",
+            "Niang",
+            "biteye",
+            "BASSE",
+            "Thioub",
+            "Diallo",
+            "Mbow",
+            "SOW"
+        ],
+        "login": [
+            "theyluvmina",
+            "owenstech",
+            "asb",
+            "smb",
+            "batman",
+            "assane",
+            "ben",
+            "docteurlove"
+        ],
+        "password": [
+            "salutdh",
+            "babs",
+            "chat",
+            "basse",
+            "champion",
+            "maisbon",
+            "escobar",
+            "love"
+        ],
+        "avatar": [
+            "avatar\/mina.jpg",
+            "avatar\/owenstech.JPG",
+            "avatar\/asbiteye.JPG",
+            "avatar\/smb.JPG",
+            "avatar\/batman.JPG",
+            "avatar\/assane.jpg",
+            "avatar\/ben.png",
+            "avatar\/docteurlove.JPG"
+        ],
+        "score": [
+            0,
+            5,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+        ]
+    }
+}

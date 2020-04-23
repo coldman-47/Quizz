@@ -1,0 +1,79 @@
+{
+    "question": [
+        "Les langages Web",
+        "Origine du coronavirus COVID-19",
+        "Quel terme définit langage qui s’adapte sur Androïd et sur IOS?",
+        "Quelle est la première école de codage gratuite au Sénégal?",
+        "Les précurseurs de la révolution digitale",
+        "Qui est le fondateur de Microsoft?"
+    ],
+    "score": [
+        5,
+        5,
+        10,
+        5,
+        5,
+        5
+    ],
+    "type": [
+        "qcm",
+        "radio",
+        "text",
+        "radio",
+        "radio",
+        "qcm"
+    ],
+    "nr": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+    ],
+    "reponses": [
+        [
+            "HTML",
+            "R",
+            "JAVA"
+        ],
+        [
+            "Chine",
+            "Italie"
+        ],
+        null, [
+            "Simplon",
+            "Orange Digital Center"
+        ],
+        [
+            "GAFAM",
+            "FBI-CIA"
+        ],
+        [
+            "Steve JOBS",
+            "Bill GATES",
+            "Mark ZUCKERBERG"
+        ]
+    ],
+    "vrai": [
+        [
+            "HTML"
+        ],
+        [
+            "Chine"
+        ],
+        [
+            "Swyft"
+        ],
+        [
+            "Orange Digital Center"
+        ],
+        [
+            "GAFAM"
+        ],
+        [
+            "Bill GATES"
+        ]
+    ],
+    "nombre": 5
+}
