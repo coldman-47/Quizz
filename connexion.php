@@ -45,7 +45,8 @@ if(isset($_POST['con'])){
     }
 }
 if(isset($_POST['signup'])){
-    header('location:inscriptionJoueur.php');
+    $_SESSION['signup'] = true;
+    header('location:index.php');
 }
 ?>
 <!DOCTYPE html>

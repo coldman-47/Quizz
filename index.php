@@ -4,6 +4,9 @@ if(isset($_SESSION['joueur'])){
     require_once('jeux.php');
 }elseif(isset($_SESSION['admin'])){
     require_once('admin.php');
+}elseif(isset($_SESSION['signup'])){
+    unset($_SESSION['signup']);
+    require_once('inscriptionJoueur.php');
 }else{
     require_once('connexion.php');
 }

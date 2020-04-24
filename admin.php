@@ -19,14 +19,14 @@ if(isset($_POST['lj'])){
     $_SESSION['include'] = 'inscriptions';
 }elseif(isset($_POST['lq'])){
     $_SESSION['include'] = 'questions';
-}else{
+}elseif(!isset($_SESSION['include'])){
     $_POST['lq'] = '-active';
     $_SESSION['include'] = 'questions';
 }
 
 if(!isset($_SESSION['lq'],$_SESSION['ca'],$_SESSION['lj'],$_SESSION['cq']) || !empty($_POST['lq']) || !empty($_POST['ca']) || !empty($_POST['lj']) || !empty($_POST['cq']) ){
-    $_SESSION['lq'] = active('lq');$_SESSION['ca'] = active('ca');
-    $_SESSION['lj'] = active('lj');$_SESSION['cq'] = active('cq');
+    $_SESSION['lq'] = active('lq'); $_SESSION['ca'] = active('ca');
+    $_SESSION['lj'] = active('lj'); $_SESSION['cq'] = active('cq');
 }
 ?>
 <!DOCTYPE html>
@@ -38,8 +38,6 @@ if(!isset($_SESSION['lq'],$_SESSION['ca'],$_SESSION['lj'],$_SESSION['cq']) || !e
     <link rel="stylesheet" href="index.css">
 </head>
 <style>
-    html,body{
-    }
     #menu{
         width: 35%;
         height: 100%;

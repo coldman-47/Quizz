@@ -1,5 +1,6 @@
 <?php
 $_SESSION['id'] = [];
+const N = 15;
 $joueurs = json_decode(file_get_contents('users.json'),true)['joueurs'];
 $prev = ''; $next='';
 if(!isset($_GET['page'])){
@@ -12,8 +13,8 @@ $score = $joueurs['score'];
 foreach($score as $key => $val){
     $_SESSION['id'][] = $key;
 }
-$npage = ceil(sizeof($_SESSION['id'])/15);
-$min = ($page-1)*15; $max = $min + 15;
+$npage = ceil(sizeof($_SESSION['id'])/N);
+$min = ($page-1)*N; $max = $min + N;
 if($page <= 1){
     $page = 1;
     $prev = 'none';
@@ -43,6 +44,9 @@ if($page == $npage){
         width: 100%;
         font-size: 1.5em
     }
+    th{
+        font-style: italic;
+    }
     th,td{
         color: grey;
         padding: .25em 1em;
@@ -57,7 +61,7 @@ if($page == $npage){
     }
 </style>
 <body>
-        <h2 style="color: grey">Liste des joueurs pas score</h2>
+        <h2 style="color: grey">Liste des joueurs par score</h2>
         <table>
             <tr>
                 <th>Nom</th>

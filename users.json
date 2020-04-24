@@ -30,7 +30,12 @@
             "Djiby",
             "Assane",
             "Sam",
-            "Cheikh"
+            "Cheikh",
+            "Ousseynou",
+            "Aziz",
+            "Aziz",
+            "Jeannette",
+            "El Hadji"
         ],
         "nom": [
             "DIOP",
@@ -40,7 +45,12 @@
             "Thioub",
             "Diallo",
             "Mbow",
-            "SOW"
+            "SOW",
+            "DIOP",
+            "KANE",
+            "DIALLO",
+            "PREIRA",
+            "THIAM"
         ],
         "login": [
             "theyluvmina",
@@ -50,7 +60,12 @@
             "batman",
             "assane",
             "ben",
-            "docteurlove"
+            "docteurlove",
+            "weuzy",
+            "kane",
+            "ziz",
+            "jeanette",
+            "thiam446"
         ],
         "password": [
             "salutdh",
@@ -60,7 +75,12 @@
             "champion",
             "maisbon",
             "escobar",
-            "love"
+            "love",
+            "weuz",
+            "kikana",
+            "ziiz",
+            "pereiraa",
+            "thethiam"
         ],
         "avatar": [
             "avatar\/mina.jpg",
@@ -70,13 +90,23 @@
             "avatar\/batman.JPG",
             "avatar\/assane.jpg",
             "avatar\/ben.png",
-            "avatar\/docteurlove.JPG"
+            "avatar\/docteurlove.JPG",
+            "avatar\/weuzy.jpeg",
+            "avatar\/kane.jpeg",
+            "avatar\/ziz.jpeg",
+            "avatar\/jeanette.jpeg",
+            "avatar\/thiam446.jpg"
         ],
         "score": [
             0,
             5,
             0,
             1,
+            0,
+            0,
+            0,
+            0,
+            0,
             0,
             0,
             0,

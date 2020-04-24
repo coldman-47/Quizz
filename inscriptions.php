@@ -47,7 +47,7 @@ if(isset($_POST['signup'])){
                                             $users['joueurs']['score'][] = 0;
                                             file_put_contents('users.json',json_encode($users,JSON_PRETTY_PRINT));
                                         }
-                                        header('location:connexion.php');
+                                        header('location:index.php');
                                     }
                                 }
                                 else{
