@@ -2,15 +2,17 @@
     "question": [
         "Les langages Web",
         "Origine du coronavirus COVID-19",
-        "Quel terme définit langage qui s’adapte sur Androïd et sur IOS?",
-        "Quelle est la première école de codage gratuite au Sénégal?",
-        "Les précurseurs de la révolution digitale",
-        "Qui est le fondateur de Microsoft?"
+        "Quel terme d\u00e9finit langage qui s\u2019adapte sur Andro\u00efd et sur IOS?",
+        "Quelle est la premi\u00e8re \u00e9cole de codage gratuite au S\u00e9n\u00e9gal?",
+        "Les pr\u00e9curseurs de la r\u00e9volution digitale",
+        "Qui est le fondateur de Microsoft?",
+        "Ballon d'or africain 2019"
     ],
     "score": [
         5,
         5,
         10,
+        5,
         5,
         5,
         5
@@ -21,15 +23,8 @@
         "text",
         "radio",
         "radio",
-        "qcm"
-    ],
-    "nr": [
-        1,
-        1,
-        1,
-        1,
-        1,
-        1
+        "qcm",
+        "radio"
     ],
     "reponses": [
         [
@@ -41,7 +36,10 @@
             "Chine",
             "Italie"
         ],
-        null, [
+        [
+            "swyft"
+        ],
+        [
             "Simplon",
             "Orange Digital Center"
         ],
@@ -53,6 +51,10 @@
             "Steve JOBS",
             "Bill GATES",
             "Mark ZUCKERBERG"
+        ],
+        [
+            "Sadio Man\u00e9",
+            "Mouhamed Salah"
         ]
     ],
     "vrai": [
@@ -73,6 +75,9 @@
         ],
         [
             "Bill GATES"
+        ],
+        [
+            "Sadio Man\u00e9"
         ]
     ],
     "nombre": 5

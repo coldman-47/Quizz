@@ -1,4 +1,6 @@
 <?php
+$questionnaires=json_decode(file_get_contents('questions.json'),true);
+
 $error = '';$classError = '';
 const ERROR = 'error';
 function notNull($array){
@@ -8,7 +10,7 @@ function notNull($array){
 }
 if(isset($_POST['save'])){
     $enonce = $_POST['enonce'];
-    $points = $_POST['points'];
+    $score = $_POST['points'];
     $type = $_POST['type'];
     $reponses = []; $vraies=[];
     foreach($_POST as $key => $val){
@@ -20,10 +22,16 @@ if(isset($_POST['save'])){
             }
         }
     }
-    if(!empty($enonce && $points && $type) && notNull($reponses)){
+    if(!empty($enonce && $score && $type) && notNull($reponses)){
         if(in_array($type,['qcm','radio','text'])){
             if(sizeof($vraies) > 0){
-                if(in_array($type,['radio','text']) && sizeof($vraies) == 1){
+                if($type == 'qcm' || (in_array($type,['radio','text']) && sizeof($vraies) == 1)){
+                    $questionnaires['question'][] = $enonce;
+                    $questionnaires['score'][] = (int)$score;
+                    $questionnaires['type'][] = $type;
+                    $questionnaires['reponses'][] = $reponses;
+                    $questionnaires['vrai'][] = $vraies;
+                    file_put_contents('questions.json', json_encode($questionnaires,JSON_PRETTY_PRINT));
                 }else{
                     $error = 'La réponse doit être unique pour les questions de type radio ou texte'; $classError = ERROR;
                 }
@@ -49,30 +57,33 @@ if(isset($_POST['save'])){
     #questions{
         width: 100%;
         padding:2rem;
-        background-color:white
+        background-color:white;
+        font-size:1.5rem
     }
     #formQst{
         display: flex;
         flex-direction: column;
+        border: solid 2px deepskyblue
     }
     #formQst div{
         display: flex;
         align-items: center;
-        padding: .5em;
+        padding: .125em;
     }
     #formQst div input,
+    #formQst div textarea,
     #formQst div select
     {
         box-shadow: none;
         padding: .5em;
         border-radius: 0;
-        background-color:snow;
+        background-color:whitesmoke;
         border: solid 1px deepskyblue;
         border-width: 0 1px 1px 0;
         color:grey;
         font-weight: lighter;
-        font-size: 1em
-
+        font-size: 1em;
+        resize: none;
     }
     #reponses{
         flex-direction: column;
@@ -85,6 +96,9 @@ if(isset($_POST['save'])){
         font-size: 1.5rem  !important;
         color:deepskyblue  !important;
         cursor: pointer;
+    }
+    label{
+        margin-right:.5rem
     }
     #pts{
         max-width: 5rem;
@@ -99,10 +113,11 @@ if(isset($_POST['save'])){
 </style>
 <body>
 <div id="questions">
+    <h2 style="color:deepskyblue; margin-top:-0.5em">Paramétrez votre question</h2>
     <form id="formQst" method="post">
         <div>
             <label for="">Questions</label>
-            <input name="enonce">
+            <textarea name="enonce"></textarea>
         </div>
         <div>
             <label for="">Nombre de points</label>
@@ -111,33 +126,39 @@ if(isset($_POST['save'])){
         <div>
             <label for="">Type de question</label>
             <select id="type" name="type">
+                <option selected disabled>Donnez le type de réponse</option>
                 <option value="qcm">Choix multiple</option>
                 <option value="radio">Radio bouton</option>
                 <option value="text">Champ texte</option>
             </select>
-            <input id="plus" type="button" value="+" onclick="reponse()">
+            <input id="plus" type="button" value="+">
         </div>
         <div id="reponses">
         </div>
-        <div><button name="save">Enregister</button></div>
+        <div><button style="margin-left:0" name="save">Enregister</button></div>
     </form>
 </div>
 </body>
         <p class="<?= $classError ?>"><?= $error ?></p>
 <script>
 
+function required(){
+var required = document.getElementsByClassName('requis'), n = required.length;
+
+}
 function reponse(){
+let id = []; id.push(1);
     let x = document.getElementsByClassName('rep').length;
     let type = document.getElementById('type').value, reponses = document.getElementById('reponses');
     if(type == 'qcm' || type == 'radio'){
         if(x<5){
-            reponses.innerHTML += '<div class="rep" id="rep'+(x+1)+'"><label for="">Reponse '+(x+1)+'</label><input name="rep-'+(x+1)+'" type="text"><input type="checkbox" name="cb'+(x+1)+'" id=""><input onClick="trash('+(x+1)+')" type="button" class="del" id="del'+(x+1)+'" value="&#x1f5d1;"></div>';
+            reponses.innerHTML += '<div class="rep" id="rep'+(x+1)+'"><label for="">Reponse '+(x+1)+'</label><input name="rep-'+(x+1)+'" type="text"><input type="checkbox" name="cb'+(x+1)+'" id=""><input onClick="trash('+(x+1)+')" type="button" class="del" id="del'+(x+1)+'" value="🗑"></div>';
         }
     }else if(type == 'text'){
         reponses.innerHTML = '<div><label for="">Reponse</label><input name="rep" placeholder="Saisir la bonne réponse"></div>';
     }
 }
-
+document.getElementById('plus').addEventListener("click",reponse);
 function trash(cpt){
     document.getElementById('rep'+cpt).remove();
 }

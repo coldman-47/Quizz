@@ -19,6 +19,8 @@ if(isset($_POST['lj'])){
     $_SESSION['include'] = 'inscriptions';
 }elseif(isset($_POST['lq'])){
     $_SESSION['include'] = 'questions';
+}elseif(isset($_POST['cq'])){
+    $_SESSION['include'] = 'addQuestion';
 }elseif(!isset($_SESSION['include'])){
     $_POST['lq'] = '-active';
     $_SESSION['include'] = 'questions';
