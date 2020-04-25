@@ -1,9 +1,9 @@
 <?php
-session_start();
+
 $idqst = $_SESSION['idqst'];
 $questionnaires=json_decode(file_get_contents('questions.json'),true);
 $questions = $questionnaires['question']; $type = $questionnaires['type']; $reponse = $questionnaires['reponses'];
-$nombre = $questionnaires['nombre']; $point = $questionnaires['score']; $nr = $questionnaires['nr'];
+$nombre = $questionnaires['nombre']; $point = $questionnaires['score'];
 
 if(!isset($_SESSION['joueur'])){
     header('location:connexion.php');
@@ -127,15 +127,15 @@ else{
                 </form>
                 </div>
                 <div style="display: flex; width:100%;">
-                    <a class="prev" href="jeux.php?page=<?= $page-1 ?>"><button>Précédent</button> </a>
-                    <a class="next" href="jeux.php?page=<?= $page+=1?>"><button>Suivant</button></a>
+                    <a class="prev" href="index.php?page=<?= $page-1 ?>"><button>Précédent</button> </a>
+                    <a class="next" href="index.php?page=<?= $page+=1?>"><button>Suivant</button></a>
                 </div>
             </div>
         </div>
         <div style="width: 40%; display:flex;align-items:center; padding: 1.5rem; flex-direction:column">
             <div id="rubrique">
-                <a href="jeux.php?top" class="<?= $top ?>">Top Scores</a>
-                <a href="jeux.php?mysc" class="<?= $myscore ?>">Mon meilleur score</a>
+                <a href="index.php?top" class="<?= $top ?>">Top Scores</a>
+                <a href="index.php?mysc" class="<?= $myscore ?>">Mon meilleur score</a>
             </div>
             <?php
             $joueurs = json_decode(file_get_contents('users.json'),true)['joueurs'];

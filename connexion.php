@@ -3,7 +3,9 @@ $error = '';$classError = '';
 $users = json_decode(file_get_contents('users.json'),true);
 $admin = $users['admin']; $joueurs = $users['joueurs'];
 $usernames = array_merge($admin['login'],$joueurs['login']);
-
+if(isset($_SESSION['admin'])){
+    header('location:index.php');
+}
 function user($role,$login,$password){
     if(in_array($login,$role['login'])){
         $_SESSION['id'] = array_search($login,$role['login']);
@@ -32,7 +34,7 @@ if(isset($_POST['con'])){
                         $idqst[] = $random;
                     }
                     $_SESSION['idqst'] = $idqst;
-                    // header('location:jeux.php');
+                    header('location:index.php');
                 }
             }else{
                 $error = 'Mot de passe incorrect'; $classError = 'error';
