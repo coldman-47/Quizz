@@ -148,14 +148,23 @@ var required = document.getElementsByClassName('requis'), n = required.length;
 }
 function reponse(){
 let id = []; id.push(1);
-    let x = document.getElementsByClassName('rep').length;
+    let x = document.getElementsByClassName('rep').length, champs = document.getElementById('rep-0');
     let type = document.getElementById('type').value, reponses = document.getElementById('reponses');
     if(type == 'qcm' || type == 'radio'){
+        if(champs != null){
+            champs.remove();
+        }
         if(x<5){
-            reponses.innerHTML += '<div class="rep" id="rep'+(x+1)+'"><label for="">Reponse '+(x+1)+'</label><input name="rep-'+(x+1)+'" type="text"><input type="checkbox" name="cb'+(x+1)+'" id=""><input onClick="trash('+(x+1)+')" type="button" class="del" id="del'+(x+1)+'" value="🗑"></div>';
+            let r = x+1, check = document.getElementById('rep'+r);
+            while(check !== null){
+                r += 1; check = document.getElementById('rep'+r);
+            }
+            var newField = document.createElement('div'), newAnswer =  '<label for="">Reponse '+(r)+'</label><input name="rep-'+r+'" type="text"><input type="checkbox" name="cb'+r+'" id=""><input onClick="trash('+r+')" type="button" class="del" id="del'+r+'" value="🗑">';
+            newField.setAttribute('id','rep'+r); newField.innerHTML += newAnswer;
+            reponses.appendChild(newField);
         }
     }else if(type == 'text'){
-        reponses.innerHTML = '<div><label for="">Reponse</label><input name="rep" placeholder="Saisir la bonne réponse"></div>';
+        reponses.innerHTML = '<div id="rep-0"><label for="">Reponse</label><input name="rep-0" placeholder="Saisir la bonne réponse"><input type="checkbox" name="cb0" checked hidden></div>';
     }
 }
 document.getElementById('plus').addEventListener("click",reponse);
