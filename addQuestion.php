@@ -54,6 +54,11 @@ if(isset($_POST['save'])){
     <link rel="stylesheet" href="index.css">
 </head>
 <style>
+    blockquote{
+        color:red;
+        font-size: 1em;
+        margin-left:.25em
+    }
     #questions{
         width: 100%;
         padding:2rem;
@@ -117,15 +122,15 @@ if(isset($_POST['save'])){
     <form id="formQst" method="post">
         <div>
             <label for="">Questions</label>
-            <textarea name="enonce"></textarea>
+            <textarea name="enonce" class="requis"></textarea>
         </div>
         <div>
             <label for="">Nombre de points</label>
-            <input min="1" id="pts" name="points" type="number">
+            <input min="1" id="pts" name="points" type="number" class="requis">
         </div>
         <div>
             <label for="">Type de question</label>
-            <select id="type" name="type">
+            <select id="type" name="type" class="requis">
                 <option selected disabled>Donnez le type de réponse</option>
                 <option value="qcm">Choix multiple</option>
                 <option value="radio">Radio bouton</option>
@@ -139,13 +144,34 @@ if(isset($_POST['save'])){
     </form>
 </div>
 </body>
-        <p class="<?= $classError ?>"><?= $error ?></p>
+        <p class="<?= $classError ?>" id="error"><?= $error ?></p>
 <script>
 
-function required(){
-var required = document.getElementsByClassName('requis'), n = required.length;
+function require(e){
+var required = document.getElementsByClassName('requis'), n = required.length, erreur = false;
+var block = document.getElementsByTagName('blockquote');
 
+if(block.length !=0){
+    for(let ct = 0; ct < block.length; ct++){
+        block[ct].remove();
+    }
 }
+for(let cpt = 0; cpt < n; cpt++){
+    if(!required[cpt].value){
+        var error = document.createElement('blockquote'), msg = document.createTextNode('*'), box = required[cpt].parentNode;
+        error.appendChild(msg);
+        box.insertBefore(error,box.childNodes[2]);
+        erreur = true;
+    }
+}
+if(erreur){
+    e.preventDefault();
+    document.getElementById('error').innerHTML = '* Champs obligatoires';
+}
+}
+
+document.getElementById('formQst').addEventListener("submit",require);
+
 function reponse(){
 let id = []; id.push(1);
     let x = document.getElementsByClassName('rep').length, champs = document.getElementById('rep-0');
@@ -159,12 +185,12 @@ let id = []; id.push(1);
             while(check !== null){
                 r += 1; check = document.getElementById('rep'+r);
             }
-            var newField = document.createElement('div'), newAnswer =  '<label for="">Reponse '+(r)+'</label><input name="rep-'+r+'" type="text"><input type="checkbox" name="cb'+r+'" id=""><input onClick="trash('+r+')" type="button" class="del" id="del'+r+'" value="🗑">';
+            var newField = document.createElement('div'), newAnswer =  '<label for="">Reponse '+(r)+'</label><input class="requis" name="rep-'+r+'" type="text"><input type="checkbox" name="cb'+r+'" id=""><input onClick="trash('+r+')" type="button" class="del" id="del'+r+'" value="🗑">';
             newField.setAttribute('id','rep'+r); newField.innerHTML += newAnswer;
             reponses.appendChild(newField);
         }
     }else if(type == 'text'){
-        reponses.innerHTML = '<div id="rep-0"><label for="">Reponse</label><input name="rep-0" placeholder="Saisir la bonne réponse"><input type="checkbox" name="cb0" checked hidden></div>';
+        reponses.innerHTML = '<div id="rep-0"><label for="">Reponse</label><input class="requis" name="rep-0" placeholder="Saisir la bonne réponse"><input type="checkbox" name="cb0" checked hidden></div>';
     }
 }
 document.getElementById('plus').addEventListener("click",reponse);
