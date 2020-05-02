@@ -1,6 +1,6 @@
 <?php
 $questionnaires=json_decode(file_get_contents('questions.json'),true);
-$questions = $questionnaires['question']; $type = $questionnaires['type']; $reponse = $questionnaires['reponses']; $nombre = $questionnaires['nombre'];
+$questions = $questionnaires['question']; $type = $questionnaires['type']; $reponse = $questionnaires['reponses']; $nombre = $questionnaires['nombre']; $vraies = $questionnaires['vrai'];
 $npage = ceil(sizeof($questions)/$nombre);
 if(!isset($_GET['page'])){
     $page = 1;
@@ -17,6 +17,23 @@ if($page <= 1){
 if($page == $npage){
     $max = sizeof($questions);
     $next = 'none';
+}
+foreach($_POST as $key => $val){
+    if(preg_match('/^(del)/', $key)){
+        $id = explode('-', $key)[1];
+        $deleted = [];
+        foreach($questionnaires as $cle => $content){
+            if($cle=='nombre'){
+            break;
+            }
+            $deleted[] = $content[$id];
+            unset($questionnaires[$cle][$id]);
+        }
+        file_put_contents('questions.json', json_encode($questionnaires,JSON_PRETTY_PRINT));
+        header('location:index.php');
+    break;
+    }
+break;
 }
 ?>
 <!DOCTYPE html>
@@ -76,6 +93,36 @@ if($page == $npage){
         font-size: 1em;
         border-radius: 0
     }
+    .set{
+        padding: 0;
+        width: 25%;
+        margin: 0;
+        background: none
+    }
+    .set input{
+        background: none;
+        box-shadow: none;
+        padding:0;
+        margin: 0;
+        border:none;
+        cursor:pointer;
+        color:gray
+    }
+    .set input:hover{
+        color:deepskyblue
+    }
+    h3{
+        font-size:1.25em;
+        text-align: justify;
+        display: flex;
+        flex-flow: row nowrap
+    }
+    h3:hover{
+        background-color:wheat;
+    }
+    h3 div{
+        width: 75%
+    }
 </style>
 <body>
     <form method="post" id="nq">
@@ -87,19 +134,27 @@ if($page == $npage){
         <?php
         for($cpt=$min; $cpt<$max; $cpt++){
         ?>
-        <h3><?= ($cpt+1).". ".$questions[$cpt] ?></h3>
+        <h3><div><?= ($cpt+1).". ".$questions[$cpt] ?></div><form method="post" class="set"><input onclick="window.open('setQuestion.php?num=<?= $cpt ?>', '_blank');" type="submit" value="✎"><input class="del" name="del-<?= $cpt ?>" type="submit" value="🗑"></form></h3>
         <?php
         if(in_array($type[$cpt],['qcm','radio'])){
             if($type[$cpt]=='qcm'){
                 $ul = "url('Imgs/Icônes/square.png')";
+                $li = 'style="list-style-image:url'."('Imgs/Icônes/square-checked.png')".'"';
             }else{
                 $ul = "url('Imgs/Icônes/circle.png')";
+                $li = 'style="list-style-image:url'."('Imgs/Icônes/circle-checked.png')".'"';
             }
             echo '<ul style="list-style-image:'.$ul.'">';
             for($ct = 0; isset($reponse[$cpt][$ct]);$ct++){
+                if(in_array($reponse[$cpt][$ct], $vraies[$cpt])){
                 ?>
-                <li><?= $reponse[$cpt][$ct] ?></li>
+                <li <?= $li ?>><?= $reponse[$cpt][$ct] ?></li>
                 <?php
+                }else{
+                    ?>
+                    <li><?= $reponse[$cpt][$ct] ?></li>
+                    <?php
+                    }
             }
             echo '</ul>';
         }
@@ -115,4 +170,7 @@ if($page == $npage){
         </div>
     </div>
 </body>
+<script>
+    let del = document.getElementsByClassName('del');
+</script>
 </html>

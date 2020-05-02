@@ -34,6 +34,7 @@ if(isset($_POST['con'])){
                         $idqst[] = $random;
                     }
                     $_SESSION['idqst'] = $idqst;
+                    $_SESSION['repondu'] = $_SESSION['point'] = [];
                     header('location:index.php');
                 }
             }else{
@@ -75,7 +76,7 @@ if(isset($_POST['signup'])){
             <div style="width:100%; margin:0 auto; padding:1rem; background-color:deepskyblue; color:white">
                 <h3>Login Form</h3>
             </div>
-            <form method="post">
+            <form action="index.php" method="post">
                 <input name="log" placeholder="Login" style="background-image:url('imgs/Icônes/ic-login.png')">
                 <input name="pwd" placeholder="Password" type="password"  style="background-image:url('imgs/Icônes/ic-password.png')">
                 <div>

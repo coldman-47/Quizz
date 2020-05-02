@@ -15,20 +15,38 @@ function active($name){
 }
 if(isset($_POST['lj'])){
     $_SESSION['include'] = 'joueurs';
+    if(isset($_GET['page'])){
+        unset($_GET['page']);
+    }
 }elseif(isset($_POST['ca'])){
     $_SESSION['include'] = 'inscriptions';
+    if(isset($_GET['page'])){
+        unset($_GET['page']);
+    }
 }elseif(isset($_POST['lq'])){
     $_SESSION['include'] = 'questions';
+    if(isset($_GET['page'])){
+        unset($_GET['page']);
+    }
 }elseif(isset($_POST['cq'])){
     $_SESSION['include'] = 'addQuestion';
+    if(isset($_GET['page'])){
+        unset($_GET['page']);
+    }
+}elseif(isset($_POST['stats'])){
+    $_SESSION['include'] = 'chart';
+    if(isset($_GET['page'])){
+        unset($_GET['page']);
+    }
 }elseif(!isset($_SESSION['include'])){
     $_POST['lq'] = '-active';
     $_SESSION['include'] = 'questions';
 }
 
-if(!isset($_SESSION['lq'],$_SESSION['ca'],$_SESSION['lj'],$_SESSION['cq']) || !empty($_POST['lq']) || !empty($_POST['ca']) || !empty($_POST['lj']) || !empty($_POST['cq']) ){
+if(!isset($_SESSION['lq'],$_SESSION['ca'],$_SESSION['lj'],$_SESSION['cq']) || !empty($_POST['lq']) || !empty($_POST['ca']) || !empty($_POST['lj']) || !empty($_POST['cq']) || !empty($_POST['stats'])){
     $_SESSION['lq'] = active('lq'); $_SESSION['ca'] = active('ca');
     $_SESSION['lj'] = active('lj'); $_SESSION['cq'] = active('cq');
+    $_SESSION['stats'] = active('stats');
 }
 ?>
 <!DOCTYPE html>
@@ -118,6 +136,7 @@ if(!isset($_SESSION['lq'],$_SESSION['ca'],$_SESSION['lj'],$_SESSION['cq']) || !e
                 <input name="ca" class="menu-ctrl ca <?= $_SESSION['ca'] ?>" type="submit" value="Créer Admin" style="background-image: url('imgs/Icônes/ic-ajout<?= $_SESSION['ca'] ?>.png')">
                 <input name="lj" class="menu-ctrl lj <?= $_SESSION['lj'] ?>" type="submit" value="Liste  Joueurs" style="background-image: url('imgs/Icônes/ic-liste<?= $_SESSION['lj'] ?>.png')">
                 <input name="cq" class="menu-ctrl cq <?= $_SESSION['cq'] ?>" type="submit" value="Créer Questions" style="background-image: url('imgs/Icônes/ic-ajout<?= $_SESSION['cq'] ?>.png')">
+                <input name="stats" class="menu-ctrl stats <?= $_SESSION['stats'] ?>" type="submit" value="Statistiques" style="background-image: url('imgs/Icônes/ic-liste<?= $_SESSION['stats'] ?>.png')">
             </form>
         </div>
         <div id="page">

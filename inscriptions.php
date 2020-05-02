@@ -46,6 +46,7 @@ if(isset($_POST['signup'])){
                                             $users = inscrire($users,'joueurs', $pnom, $nom,$log,$pwd,$avatar);
                                             $users['joueurs']['score'][] = 0;
                                             file_put_contents('users.json',json_encode($users,JSON_PRETTY_PRINT));
+                                            unset($_SESSION['signup']);
                                         }
                                         header('location:index.php');
                                     }

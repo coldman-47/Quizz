@@ -1,6 +1,6 @@
 <?php
 $questionnaires=json_decode(file_get_contents('questions.json'),true);
-
+$enonce = $score = null;
 $error = '';$classError = '';
 const ERROR = 'error';
 function notNull($array){
@@ -26,12 +26,16 @@ if(isset($_POST['save'])){
         if(in_array($type,['qcm','radio','text'])){
             if(sizeof($vraies) > 0){
                 if($type == 'qcm' || (in_array($type,['radio','text']) && sizeof($vraies) == 1)){
-                    $questionnaires['question'][] = $enonce;
-                    $questionnaires['score'][] = (int)$score;
-                    $questionnaires['type'][] = $type;
-                    $questionnaires['reponses'][] = $reponses;
-                    $questionnaires['vrai'][] = $vraies;
-                    file_put_contents('questions.json', json_encode($questionnaires,JSON_PRETTY_PRINT));
+                    if($type == 'qcm' && (sizeof($reponses) == sizeof($vraies))){
+                        $error = 'Toutes les propositions ne doivent pas être juste'; $classError = ERROR;
+                    }else{
+                        $questionnaires['question'][] = $enonce;
+                        $questionnaires['score'][] = (int)$score;
+                        $questionnaires['type'][] = $type;
+                        $questionnaires['reponses'][] = $reponses;
+                        $questionnaires['vrai'][] = $vraies;
+                        file_put_contents('questions.json', json_encode($questionnaires,JSON_PRETTY_PRINT));
+                    }
                 }else{
                     $error = 'La réponse doit être unique pour les questions de type radio ou texte'; $classError = ERROR;
                 }
@@ -57,7 +61,8 @@ if(isset($_POST['save'])){
     blockquote{
         color:red;
         font-size: 1em;
-        margin-left:.25em
+        margin-left:.25em;
+        font-weight: bolder
     }
     #questions{
         width: 100%;
@@ -115,18 +120,23 @@ if(isset($_POST['save'])){
         font-size: 1.5rem !important;
         cursor: pointer;
     }
+    #error{
+        color:red;
+        font-size: 1.5rem;
+        padding: .5rem;
+    }
 </style>
 <body>
 <div id="questions">
-    <h2 style="color:deepskyblue; margin-top:-0.5em">Paramétrez votre question</h2>
+    <h2 style="color:deepskyblue; margin-top:-0.5em; text-transform:uppercase">Paramétrez votre question</h2>
     <form id="formQst" method="post">
         <div>
             <label for="">Questions</label>
-            <textarea name="enonce" class="requis"></textarea>
+            <textarea name="enonce" class="requis"><?= $enonce ?></textarea>
         </div>
         <div>
             <label for="">Nombre de points</label>
-            <input min="1" id="pts" name="points" type="number" class="requis">
+            <input value="<?= $score ?>" min="1" id="pts" name="points" type="number" class="requis">
         </div>
         <div>
             <label for="">Type de question</label>
@@ -141,18 +151,19 @@ if(isset($_POST['save'])){
         <div id="reponses">
         </div>
         <div><button style="margin-left:0" name="save">Enregister</button></div>
+        <b id="error"></b>
     </form>
 </div>
 </body>
-        <p class="<?= $classError ?>" id="error"><?= $error ?></p>
+        <p class="<?= $classError ?>"><?= $error ?></p>
 <script>
 
 function require(e){
 var required = document.getElementsByClassName('requis'), n = required.length, erreur = false;
-var block = document.getElementsByTagName('blockquote');
+var block = document.getElementsByTagName('blockquote'), ct;
 
-if(block.length !=0){
-    for(let ct = 0; ct < block.length; ct++){
+if(block.length != 0){
+    for(ct = block.length - 1; ct >= 0; ct--){
         block[ct].remove();
     }
 }
@@ -160,7 +171,11 @@ for(let cpt = 0; cpt < n; cpt++){
     if(!required[cpt].value){
         var error = document.createElement('blockquote'), msg = document.createTextNode('*'), box = required[cpt].parentNode;
         error.appendChild(msg);
+        if(box.childNodes.length==5){
+        box.insertBefore(error,box.childNodes[4]);
+        }else{
         box.insertBefore(error,box.childNodes[2]);
+        }
         erreur = true;
     }
 }
