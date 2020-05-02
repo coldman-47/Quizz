@@ -109,7 +109,8 @@ break;
         color:gray
     }
     .set input:hover{
-        color:deepskyblue
+        color:deepskyblue;
+        font-weight: bold
     }
     h3{
         font-size:1.25em;
@@ -160,7 +161,7 @@ break;
         }
         else{
             ?>
-                <input disabled style="padding:.25rem; box-shadow:none">
+                <input readonly value="<?= $reponse[$cpt][0] ?>" style="padding:.25rem; box-shadow:none">
             <?php
         }
         }

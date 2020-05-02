@@ -20,16 +20,15 @@ if(isset($_POST['decon'])){
 if(isset($_POST['next']) || isset($_POST['prev'])){
     $id = $_SESSION['num'];
     if(isset($_POST['next'])){
-        if($_POST['next'] == 0){
+        if(!isset($_SESSION['replay'])){
             if($id <= $nombre-1){
                 if(in_array($type[$idqst[$id]],['text','radio'])){
-                    var_dump($type[$idqst[$id]]);
                     if(!empty($_POST['rep'])){
                         $repondu = $_POST['rep'];
                         if($repondu==$vraies[$idqst[$id]][0]){
-                            $_SESSION['repondu'][] = $idqst[$id]; $_SESSION['point'][] = $point[$idqst[$id]];
+                            $_SESSION['repondu'][] = [$idqst[$id],true]; $_SESSION['point'][] = $point[$idqst[$id]];
                         }else{
-                            $_SESSION['repondu'][] = $idqst[$id]; $_SESSION['point'][] = 0;
+                            $_SESSION['repondu'][] = [$idqst[$id],false]; $_SESSION['point'][] = 0;
                         }
                         $_SESSION['num']+=1;
                         $id = $_SESSION['num'];
@@ -42,28 +41,30 @@ if(isset($_POST['next']) || isset($_POST['prev'])){
                         }
                     }
                     if(!empty($repondu)){
-                        var_dump($repondu);
-                        $_SESSION['num']+=1;
                         foreach($repondu as $key => $val){
                             if(!in_array($val,$vraies[$idqst[$id]])){
-                                $_SESSION['repondu'][] = $idqst[$id]; $_SESSION['point'][] = 0;
+                                $_SESSION['repondu'][] = [$idqst[$id],false]; $_SESSION['point'][] = 0;
                             }else{
-                                $_SESSION['repondu'][] = $idqst[$id]; $_SESSION['point'][] = $point[$idqst[$id]];
+                                $_SESSION['repondu'][] = [$idqst[$id],true]; $_SESSION['point'][] = $point[$idqst[$id]];
                             }
                         }
+                        $_SESSION['num']+=1;
+                        $id = $_SESSION['num'];
                     }
                 }
+            }
+            if($_POST['next'] != 0 && !isset($_SESSION['replay'])){
+                $_SESSION['new'] = array_sum($_SESSION['point']);
+                $_SESSION['joueur']['score'] += $_SESSION['new'];
+                $users['joueurs']['score'][$_SESSION['id']] += $_SESSION['new'];
+                $over = 1;
+                unset($_POST);
+                file_put_contents('users.json',json_encode($users,JSON_PRETTY_PRINT));
+                $_SESSION['replay'] = true;
             }
             if($id == $nombre-1){
                 $suivant = 'Terminer';
             }
-        }else{
-            $over = 1;
-            $new = array_sum($_SESSION['point']);
-            unset($_POST,$_SESSION['point'],$_SESSION['idqst']);
-            $joueur['score'] += $new;
-            $users['joueurs']['score'][$_SESSION['id']] += $new;
-            file_put_contents('users.json',json_encode($users,JSON_PRETTY_PRINT));
         }
     }else{
         if($id>=1){
@@ -105,6 +106,8 @@ if(isset($_GET['replay'])){
     $_SESSION['repondu'] = $_SESSION['point'] = [];
     $_SESSION['num'] = 0;
     $id = $_SESSION['num'];
+    unset($_SESSION['new']);
+    unset($_SESSION['replay']);
     header('location:index.php');
 }
 ?>
@@ -134,6 +137,26 @@ button a{
     margin-left: auto
 }
 </style>
+<style>
+    ul{
+        margin: 0;
+        color:black;
+    }
+    h3{
+        display: flex;
+        flex-flow: row nowrap;
+    }
+    .stat{
+        color:green;
+        font-weight: bold;
+        margin-left: auto
+    }
+    #result{
+        text-align: left;
+        color: grey;
+        font-weight: bold;
+    }
+</style>
 <body>
 <div id="doc" style="height:100%">
 <?php
@@ -156,7 +179,7 @@ button a{
     <div>
         <div id="jeux">
         <?php
-        if(!$over){
+        if(!$over && !isset($_SESSION['replay'])){
             if($suivant=='Terminer'){
                 $over = 1;
             }
@@ -210,8 +233,47 @@ button a{
         ?>
         <div id="over">
             <h1>GAME OVER!</h1>
-            <h2>Nouveau Score : +<?= $new ?> pts</h2>
+            <h2>Nouveau Score : +<?= $_SESSION['new'] ?> pts</h2>
             <div><button style="background-color:grey; background-image:none"><a href="index.php?replay">Rejouer ?</a></button></div>
+            <div id="result">
+            <?php
+            foreach($_SESSION['repondu'] as $key => $i){
+                $cpt = $i[0];
+                ?>
+                <h3>
+                    <div><?= ($key+1).". ".$questions[$cpt] ?></div>
+                    <div class="stat"><?php if($i[1]){ echo "✔"; }else{ echo "❌"; } ?></div>
+                </h3>
+                <?php
+                if(in_array($type[$cpt],['qcm','radio'])){
+                    if($type[$cpt]=='qcm'){
+                        $ul = "url('Imgs/Icônes/square.png')";
+                        $li = 'style="list-style-image:url'."('Imgs/Icônes/square-checked.png')".'"';
+                    }else{
+                        $ul = "url('Imgs/Icônes/circle.png')";
+                        $li = 'style="list-style-image:url'."('Imgs/Icônes/circle-checked.png')".'"';
+                    }
+                    echo '<ul style="list-style-image:'.$ul.'">';
+                    for($ct = 0; isset($reponse[$cpt][$ct]);$ct++){
+                        if(in_array($reponse[$cpt][$ct], $vraies[$cpt])){
+                        ?>
+                        <li <?= $li ?>><?= $reponse[$cpt][$ct] ?></li>
+                        <?php
+                        }else{
+                            ?>
+                            <li><?= $reponse[$cpt][$ct] ?></li>
+                            <?php
+                            }
+                    }
+                    echo '</ul>';
+                }else{
+                    ?>
+                    <input readonly value="<?= $reponse[$cpt][0] ?>" style="padding:.25rem; box-shadow:none">
+                <?php
+                }
+            }
+            ?>
+            </div>
         </div>
         <?php } ?>
         </div>

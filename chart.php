@@ -40,7 +40,7 @@ $points = '['.substr($points, 1).']';
 .chart-container {
   position: relative;
   margin: auto;
-  height: 80vh;
+  min-height: 70vh;
   width: 100%;
   padding: 1rem;
 }
@@ -75,7 +75,6 @@ conteneur.style.maxHeight = "25rem";
 var canvas = document.getElementById("chart");
 var ctx = canvas.getContext('2d');
 
-// Global Options:
  Chart.defaults.global.defaultFontColor = 'black';
  Chart.defaults.global.defaultFontSize = 16;
 
@@ -88,7 +87,6 @@ var data = {
                 'deepskyblue',
                 'grey'],
             data: [<?= $a.",".$j ?>],
-// Notice the borderColor
             borderColor:	['white'],
             borderWidth: [2,2]
         }
@@ -117,7 +115,6 @@ conteneur.style.maxHeight = "25rem";
 var canvas = document.getElementById("chart");
 var ctx = canvas.getContext('2d');
 
-// Global Options:
  Chart.defaults.global.defaultFontColor = 'black';
  Chart.defaults.global.defaultFontSize = 16;
 
@@ -130,7 +127,6 @@ var data = {
                 'deepskyblue',
                 'grey'],
             data: [<?= $qcm.",".$radio.",".$text ?>],
-// Notice the borderColor
             borderColor:	['white'],
             borderWidth: [2,2]
         }
