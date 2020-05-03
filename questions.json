@@ -4,7 +4,6 @@
         "Origine du coronavirus COVID-19",
         "Qui f\u00fbt le gouverneur de l'AOF?",
         "Quelle est la premi\u00e8re \u00e9cole de codage gratuite au S\u00e9n\u00e9gal?",
-        "Les pr\u00e9curseurs de la r\u00e9volution digitale",
         "Lesquels ont cr\u00e9\u00e9 leurs propre syst\u00e8me d'exploitation?",
         "Ballon d'or africain 2019"
     ],
@@ -14,14 +13,12 @@
         10,
         5,
         5,
-        5,
         5
     ],
     "type": [
         "qcm",
         "radio",
         "text",
-        "radio",
         "radio",
         "qcm",
         "radio"
@@ -42,10 +39,6 @@
         [
             "Simplon",
             "Orange Digital Center"
-        ],
-        [
-            "GAFAM",
-            "FBI-CIA"
         ],
         [
             "Steve JOBS",
@@ -69,9 +62,6 @@
         ],
         [
             "Orange Digital Center"
-        ],
-        [
-            "GAFAM"
         ],
         [
             "Steve JOBS",

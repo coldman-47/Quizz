@@ -158,7 +158,7 @@ button a{
     }
 </style>
 <body>
-<div id="doc" style="height:100%">
+<div id="doc">
 <?php
     require('header.php')
 ?>

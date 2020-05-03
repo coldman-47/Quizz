@@ -28,12 +28,12 @@ foreach($_POST as $key => $val){
             }
             $deleted[] = $content[$id];
             unset($questionnaires[$cle][$id]);
+            $questionnaires[$cle] = array_values($questionnaires[$cle]);
         }
         file_put_contents('questions.json', json_encode($questionnaires,JSON_PRETTY_PRINT));
         header('location:index.php');
-    break;
+        break;
     }
-break;
 }
 ?>
 <!DOCTYPE html>
