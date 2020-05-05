@@ -35,6 +35,10 @@ foreach($_POST as $key => $val){
         break;
     }
 }
+if(isset($_POST['nq'])){
+    $questionnaires['nombre'] = $_POST['nq'];
+    file_put_contents('questions.json', json_encode($questionnaires, JSON_PRETTY_PRINT));
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

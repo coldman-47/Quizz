@@ -27,6 +27,7 @@ if(isset($_POST['next']) || isset($_POST['prev'])){
                         $repondu = $_POST['rep'];
                         if($repondu==$vraies[$idqst[$id]][0]){
                             $_SESSION['repondu'][] = [$idqst[$id],true]; $_SESSION['point'][] = $point[$idqst[$id]];
+                            $_SESSION['trouve'][] = $idqst[$id];
                         }else{
                             $_SESSION['repondu'][] = [$idqst[$id],false]; $_SESSION['point'][] = 0;
                         }
@@ -45,7 +46,7 @@ if(isset($_POST['next']) || isset($_POST['prev'])){
                             if(!in_array($val,$vraies[$idqst[$id]])){
                                 $_SESSION['repondu'][] = [$idqst[$id],false]; $_SESSION['point'][] = 0;
                             }else{
-                                $_SESSION['repondu'][] = [$idqst[$id],true]; $_SESSION['point'][] = $point[$idqst[$id]];
+                                $_SESSION['repondu'][] = [$idqst[$id],true]; $_SESSION['point'][] = $point[$idqst[$id]]; $_SESSION['trouve'][] = $idqst[$id];
                             }
                         }
                         $_SESSION['num']+=1;
@@ -56,6 +57,9 @@ if(isset($_POST['next']) || isset($_POST['prev'])){
             if($_POST['next'] != 0 && !isset($_SESSION['replay'])){
                 $_SESSION['new'] = array_sum($_SESSION['point']);
                 $_SESSION['joueur']['score'] += $_SESSION['new'];
+                foreach($_SESSION['trouve'] as $val){
+                    $users['joueurs']['trouve'][$_SESSION['id']][] = $val;
+                }
                 $users['joueurs']['score'][$_SESSION['id']] += $_SESSION['new'];
                 $over = 1;
                 unset($_POST);
@@ -71,6 +75,11 @@ if(isset($_POST['next']) || isset($_POST['prev'])){
             unset($_SESSION['repondu'][array_key_last($_SESSION['repondu'])]);
             unset($_SESSION['point'][array_key_last($_SESSION['point'])]);
             $_SESSION['num']--;
+            $id = $_SESSION['num'];
+            $lastrouve = array_key_last($_SESSION['trouve']);
+            if($idqst[$id] == $_SESSION['trouve'][$lastrouve]){
+                unset($_SESSION['trouve'][$lastrouve]);
+            }
         }
     }
 }

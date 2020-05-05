@@ -22,20 +22,33 @@ if(isset($_POST['con'])){
                     $_SESSION['admin'] = ["pnom" => $admin['pnom'][$_SESSION['id']], "nom" => $admin['nom'][$_SESSION['id']], "login" => $admin['login'][$_SESSION['id']], "password" => $admin['password'][$_SESSION['id']], "avatar" => $admin['avatar'][$_SESSION['id']]];
                     header('location:index.php');
                 }else{
-                    $_SESSION['joueur'] = ["pnom" => $joueurs['pnom'][$_SESSION['id']], "nom" => $joueurs['nom'][$_SESSION['id']], "login" => $joueurs['login'][$_SESSION['id']], "password" => $joueurs['password'][$_SESSION['id']], "avatar" => $joueurs['avatar'][$_SESSION['id']], "score" =>$joueurs['score'][$_SESSION['id']]];
+                    $_SESSION['joueur'] = ["pnom" => $joueurs['pnom'][$_SESSION['id']], "nom" => $joueurs['nom'][$_SESSION['id']], "login" => $joueurs['login'][$_SESSION['id']], "password" => $joueurs['password'][$_SESSION['id']], "avatar" => $joueurs['avatar'][$_SESSION['id']], "score" =>$joueurs['score'][$_SESSION['id']], "trouve" =>$joueurs['trouve'][$_SESSION['id']]];
                     $questionnaires=json_decode(file_get_contents('questions.json'),true);
                     $nombre = $questionnaires['nombre']; $questions = $questionnaires['question'];
-                    $idqst = [];
-                    for($i=0;$i<$nombre;$i++){
-                        $random = rand(0,sizeof($questions)-1);
-                        while(in_array($random,$idqst)){
-                            $random = rand(0,sizeof($questions)-1);
+                    $idqst = []; $connect = true;
+                    $unplayed = 0;
+                    foreach($questions as $key => $val){
+                        if(!in_array($key, $_SESSION['joueur']['trouve'])){
+                            $unplayed++;
                         }
-                        $idqst[] = $random;
                     }
-                    $_SESSION['idqst'] = $idqst;
-                    $_SESSION['repondu'] = $_SESSION['point'] = [];
-                    header('location:index.php');
+                    if($unplayed >= $nombre){
+                        for($i=0;$i<$nombre;$i++){
+                            $cpt = 0; $rmax = sizeof($questions)-1;
+                            $random = rand(0,$rmax);
+                            while((in_array($random,$idqst) || in_array($random,$_SESSION['joueur']['trouve']))){
+                                $random = rand(0,$rmax);
+                            }
+                            $idqst[] = $random;
+                        }
+                        $_SESSION['idqst'] = $idqst;
+                        $_SESSION['repondu'] = $_SESSION['point'] = $_SESSION['trouve'] = [];
+                        header('location:index.php');
+                    }
+                    else{
+                        unset($_SESSION['joueur']);
+                        $error = 'Connexion momentannément indisponible!'; $classError = 'error';
+                    }
                 }
             }else{
                 $error = 'Mot de passe incorrect'; $classError = 'error';
