@@ -35,9 +35,10 @@ foreach($_POST as $key => $val){
         break;
     }
 }
-if(isset($_POST['nq'])){
+if(isset($_POST['nq']) && $_POST['nq']>=5){
     $questionnaires['nombre'] = $_POST['nq'];
     file_put_contents('questions.json', json_encode($questionnaires, JSON_PRETTY_PRINT));
+    header('location:index.php');
 }
 ?>
 <!DOCTYPE html>
@@ -132,7 +133,7 @@ if(isset($_POST['nq'])){
 <body>
     <form method="post" id="nq">
         <label for="">Nbre de question/Jeu</label>
-        <input name="nq" value="<?= $nombre ?>">
+        <input name="nq" placeholder="min: 5" value="<?= $nombre ?>">
         <input name="valid" type="submit" value="Ok" style="color: white; background-color:royalblue">
     </form>
     <div id="qst">

@@ -33,6 +33,10 @@ if(isset($_POST['next']) || isset($_POST['prev'])){
                         }
                         $_SESSION['num']+=1;
                         $id = $_SESSION['num'];
+                    }else{
+                        $_SESSION['repondu'][] = [$idqst[$id],false]; $_SESSION['point'][] = 0;
+                        $_SESSION['num']+=1;
+                        $id = $_SESSION['num'];
                     }
                 }else{
                     $repondu = [];
@@ -54,7 +58,7 @@ if(isset($_POST['next']) || isset($_POST['prev'])){
                     }
                 }
             }
-            if($_POST['next'] != 0 && !isset($_SESSION['replay'])){
+            if(($_POST['next'] != 0 && !isset($_SESSION['replay']))){
                 $_SESSION['new'] = array_sum($_SESSION['point']);
                 $_SESSION['joueur']['score'] += $_SESSION['new'];
                 foreach($_SESSION['trouve'] as $val){
@@ -74,6 +78,7 @@ if(isset($_POST['next']) || isset($_POST['prev'])){
         if($id>=1){
             unset($_SESSION['repondu'][array_key_last($_SESSION['repondu'])]);
             unset($_SESSION['point'][array_key_last($_SESSION['point'])]);
+            // header('Location: ' . $_SERVER['HTTP_REFERER']);
             $_SESSION['num']--;
             $id = $_SESSION['num'];
             $lastrouve = array_key_last($_SESSION['trouve']);
@@ -82,6 +87,17 @@ if(isset($_POST['next']) || isset($_POST['prev'])){
             }
         }
     }
+}elseif(isset($_POST['quit'])){
+    $_SESSION['new'] = array_sum($_SESSION['point']);
+    $_SESSION['joueur']['score'] += $_SESSION['new'];
+    foreach($_SESSION['trouve'] as $val){
+        $users['joueurs']['trouve'][$_SESSION['id']][] = $val;
+    }
+    $users['joueurs']['score'][$_SESSION['id']] += $_SESSION['new'];
+    $over = 1;
+    unset($_POST);
+    file_put_contents('users.json',json_encode($users,JSON_PRETTY_PRINT));
+    $_SESSION['replay'] = true;
 }
 elseif(!isset($_SESSION['num'])){
     $_SESSION['num'] = 0;
@@ -313,6 +329,11 @@ button a{
                     <h2 style="color:deepskyblue; text-align:center"><?= $joueur['score'] ?> points</h2>
                 <?php }
                 ?>
+            </div>
+            <div id="quitter">
+                <form method="post">
+                    <button name="quit" style="background:none; background-color:red">Quitter</button>
+            </form>
             </div>
         </div>
     </div>
